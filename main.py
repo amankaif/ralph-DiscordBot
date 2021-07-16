@@ -130,9 +130,9 @@ async def lessgo(ctx):
     print("\n\n\n", voice_channel, "\n\n\n")
     # channel = ctx.author.voice.channel
     # await voice_channel.connect()
+    songLen = MP3("resources/lessgo.mp3").info.length
     voice_channel.play(discord.FFmpegPCMAudio(executable=FFMPEG_PATH, source="resources/lessgo.mp3"))
     # await ctx.voice_client.disconnect()
-    songLen = MP3("resources/lessgo.mp3").info.length
     print("\n\n\n\ndaboogie\n\n\n\n")
     time.sleep(round(songLen)+1)
     await voice_channel.disconnect()

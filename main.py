@@ -4,6 +4,8 @@ from discord.ext import commands
 import discord
 from dotenv import load_dotenv
 import logging
+from mutagen.mp3 import MP3
+import time
 
 from keepAlive import keepAlive
 
@@ -21,6 +23,7 @@ logger.addHandler(handler)
 load_dotenv("discord.env")
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
+FFMPEG_PATH = os.getenv('FFMPEG_PATH')
 
 description = '''These are the currently available functions and their descriptions :
 Basic syntax = _<func> <args(optional)>
@@ -38,7 +41,7 @@ reminderList = []
 
 # List of functions
 
-funcs = []
+
 
 @bot.event
 async def on_ready():
@@ -65,7 +68,7 @@ async def add(ctx, left: int, right: int):
 
 @bot.command()
 async def dice(ctx):
-    """Rolls a dice"""
+    """Rolls a die (yes misleading I know)"""
     await ctx.send(random.randint(1, 6))
 
 
@@ -75,5 +78,77 @@ async def toss(ctx):
     result = ["Heads", "Tails"]
     await ctx.send(result[random.randint(0, 1)])
 
+
+@bot.command()
+async def join(ctx):
+    """Just joins a vc and does nothing else, just for comedic effect"""
+    voice_client = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+    if not voice_client:
+        pass
+    else:
+        await ctx.send("Already connected to a voice channel")
+    if not ctx.message.author.voice:
+        await ctx.send("{} is not connected to a voice channel".format(ctx.message.author.name))
+        return
+    else:
+        channel = ctx.message.author.voice.channel
+    await channel.connect()
+
+
+@bot.command()
+async def lessgo(ctx):
+    
+    server = ctx.message.guild
+    voice_channel = server.voice_client
+    voice_client = voice_channel
+    # print(voice_channel.is_connected())
+
+    # voice_client = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+    # if not voice_client:
+    if voice_channel is None:
+        if not ctx.message.author.voice:
+            await ctx.send("{} is not connected to a voice channel".format(ctx.message.author.name))
+            return
+        else:
+            voice_channel = ctx.message.author.voice.channel
+            await voice_channel.connect()
+    # else:
+    else:
+        print("yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        voice_channel = voice_client.channel
+        # await voice_channel.connect()
+        
+    # print(voice_client.channel.voice)
+
+
+    # channel = ctx.author.voice.channel
+    # await channel.connect()
+    server = ctx.message.guild
+    voice_channel = server.voice_client
+    print(voice_channel)
+    # print("\n\n\n", server, "\n\n\n")
+    print("\n\n\n", voice_channel, "\n\n\n")
+    # channel = ctx.author.voice.channel
+    # await voice_channel.connect()
+    voice_channel.play(discord.FFmpegPCMAudio(executable=FFMPEG_PATH, source="resources/lessgo.mp3"))
+    # await ctx.voice_client.disconnect()
+    songLen = MP3("resources/lessgo.mp3").info.length
+    print("\n\n\n\ndaboogie\n\n\n\n")
+    time.sleep(round(songLen)+1)
+    await voice_channel.disconnect()
+    
+
+
+@bot.command()
+async def leave(ctx):
+    """Leaves joined vc"""
+    voice_client = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+    if voice_client:
+        await voice_client.disconnect()
+    else:
+        await ctx.send("The bot is not connected to a voice channel.")
+
+
+print(MP3("resources/lessgo.mp3").info.length)
 keepAlive()
 bot.run(TOKEN)

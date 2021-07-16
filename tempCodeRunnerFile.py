@@ -1,0 +1,5 @@
+
+
+
+keepAlive()
+bot.run(TOKEN)

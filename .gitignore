@@ -4,5 +4,6 @@ _pycache_
 .replit
 tempCodeRunnerFile.py
 
-discord.env
 discord.log
+ignore
+discord.env

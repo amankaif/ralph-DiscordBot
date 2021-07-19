@@ -39,8 +39,7 @@ bot = commands.Bot(command_prefix='_', description=description, intents=intents)
 
 reminderList = []
 
-# List of functions
-
+# Commands
 
 
 @bot.event
@@ -54,16 +53,6 @@ async def on_ready():
 async def add(ctx, left: int, right: int):
     """Adds two numbers together."""
     await ctx.send(left + right)
-
-# @bot.command()
-# async def roll(ctx, dice: str):
-#     """Rolls a dice in NdN format."""
-#     try:
-#         rolls, limit = map(int, dice.split('d'))
-#
-#     except:
-#         await ctx.send('Format has to be in NdN!')
-#         return
 
 
 @bot.command()
@@ -97,7 +86,7 @@ async def join(ctx):
 
 @bot.command()
 async def lessgo(ctx):
-    
+    """Will join the vc to play the 'less go' snippet from the song VIBEZ by DaBaby and then promptly leave, implemented purely for comedic effect"""
     server = ctx.message.guild
     voice_channel = server.voice_client
     voice_client = voice_channel
@@ -149,6 +138,5 @@ async def leave(ctx):
         await ctx.send("The bot is not connected to a voice channel.")
 
 
-print(MP3("resources/lessgo.mp3").info.length)
 keepAlive()
 bot.run(TOKEN)

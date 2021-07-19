@@ -1,0 +1,8 @@
+_pycache_
+.vscode
+.idea
+.replit
+tempCodeRunnerFile.py
+
+discord.env
+discord.log

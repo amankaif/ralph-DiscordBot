@@ -17,5 +17,5 @@ As of now
 ## Future Prospects:
 
 - Ping the bot to set a trigger for it to ping you when a certain amount of or certain people gather in the voice channels.
-  -One of my internet friends who wasn't online too much kept missing out on our discord conversations because we also kept forgetting to tag him. This bot was born to
+  - One of my internet friends who wasn't online too much kept missing out on our discord conversations because we also kept forgetting to tag him. This bot was born to
   originally solve this problem and this is still in the works as I left this unfinished to begin yet another project.
